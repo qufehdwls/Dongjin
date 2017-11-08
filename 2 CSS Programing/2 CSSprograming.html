@@ -1,0 +1,1230 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+ 
+<html xmlns="http://www.w3.org/1999/xhtml">
+ 
+<head>
+<title>CSE 190 M: CSS</title>
+ 
+
+<!-- configuration parameters -->
+<meta name="defaultView" content="slideshow" />
+<meta name="controlVis" content="hidden" />
+ 
+ 
+<style type="text/css"> 
+a#examplelink:link {color: #FF0000}      /* unvisited link */
+a#examplelink:visited {color: #00FF00}   /* visited link */
+a#examplelink:hover {color: #FF00FF}     /* mouse over link */
+a#examplelink:active {color: #0000FF}    /* selected link */
+a#examplelink:first-letter {font-weight: bold; font-size: larger;}
+</style>
+ 
+</head>
+<body>
+ 
+<div class="layout">
+<div id="controls"><!-- DO NOT EDIT --></div>
+<div id="currentSlide"><!-- DO NOT EDIT --></div>
+<div id="header"></div>
+<div id="footer">
+ <h1>Web Programming, Fall 2012</h1>
+
+</div>
+
+</div>
+
+
+<div class="presentation">
+
+<div class="slide">
+<h2>Cascading Style Sheets (CSS) </h2>
+
+<h3>Infromation and Communication Engineering, Cu-Deagu</h3>
+
+<h4>Reference: <a href="http://w3schools.com/css/default.asp"> w3schools Introduction to CSS </a> </h4>
+
+
+
+</div>
+ 
+ 
+ 
+<div class="slide">
+<hr />
+<h1>The bad way to produce styles</h1>
+<hr />
+<pre class="example html">
+&lt;p&gt;<span class="emphasizedcode">&lt;font face=&quot;Arial&quot;&gt;</span>Welcome Psy.  You will
+<span class="emphasizedcode">&lt;b&gt;</span>never, <span class="emphasizedcode">&lt;i&gt;</span>ever, <span class="emphasizedcode">&lt;u&gt;</span>EVER<span class="emphasizedcode">&lt;/u&gt;&lt;/i&gt;&lt;/b&gt;</span> beat <span class="emphasizedcode">&lt;font
+size=&quot;+1&quot; color=&quot;red&quot;&gt;</span>Gangnam Style <span class="emphasizedcode">&lt;/font&gt;</span> <span class="emphasizedcode">&lt;/font&gt;</span>&lt;/p&gt;
+</pre>
+ 
+<!-- cheating by using valid XHTML that looks the same -->
+<p><span style="font-family: Arial, sans-serif;">Welcome Psy.  You will <strong>never, <em>ever, <span style="text-decoration: underline;">EVER</span></em></strong> beat <span style="color: red; font-size: larger;">Gangnam Style</span></span></p>
+ 
+<hr />
+ 
+<ul>
+<li>the above tags such as <code>b</code>, <code>i</code>, <code>u</code>, and <code>font</code> are legal in older HTML but are <span class="term">deprecated</span> in strict XHTML
+	<ul>
+	<li>you should not use the above tags on your homework assignments!</li>
+	</ul>
+</li>
+<li>why are we discouraged from expressing stylistic information this way?</li>
+</ul>
+ 
+</div>
+ 
+ 
+ 
+<div class="slide">
+<hr />
+<h1>Cascading Style Sheets (CSS)</h1>
+<hr />
+<ul>
+<li>describe the appearance, layout, and presentation of information on a web page (as opposed to HTML, which describes the content of the page)</li>
+<li>describe <em>how</em> information is to be displayed, not <em>what</em> is being displayed</li>
+<li>can be embedded in HTML document or placed into separate <code>.css</code> file
+	<ul><li>advantage of <code>.css</code> file: one style sheet can be shared across many HTML documents</li></ul>
+</li>
+</ul>
+
+<h2> <a href="http://www.w3schools.com/css/demo_default.htm"> See demo of css  </a> </h2> 
+
+</div>
+ 
+ 
+ 
+<div class="slide">
+<hr />
+<h1>Basic CSS rule syntax</h1>
+<hr /> 
+<pre class="example css">
+<span class="syntaxtemplate">selector</span> {
+    <span class="syntaxtemplate">property</span>: <span class="syntaxtemplate">value</span>;
+    <span class="syntaxtemplate">property</span>: <span class="syntaxtemplate">value</span>;
+    <span class="syntaxtemplate">...</span>
+    <span class="syntaxtemplate">property</span>: <span class="syntaxtemplate">value</span>;
+}
+</pre>
+ 
+<pre>
+p {
+    font-family: sans-serif;
+    color: red;
+}
+</pre>
+ 
+<hr />
+ 
+<ul>
+<li>a CSS file consists of one or more <span class="term">rules</span></li>
+<li>each rule starts with a <span class="term">selector</span> that specifies an HTML element and then applies style <span class="term">properties</span> to it</li>
+</ul>
+ 
+</div>
+ 
+ 
+ 
+<div class="slide">
+<hr />
+<h1>Attaching a CSS file: <code><a href="http://www.w3schools.com/tags/tag_link.asp">&lt;link&gt;</a></code></h1>
+<hr /> 
+<pre class="example html">
+&lt;link rel=&quot;stylesheet&quot; type=&quot;text/css&quot; href=&quot;<span class="syntaxtemplate">filename</span>&quot; /&gt;
+</pre>
+ 
+<pre>
+ 
+&lt;link rel=&quot;stylesheet&quot; type=&quot;text/css&quot; href=&quot;style.css&quot; /&gt;
+ 
+&lt;link rel=&quot;stylesheet&quot; type=&quot;text/css&quot;
+href=&quot;http://www.google.com/uds/css/gsearch.css&quot; /&gt;
+</pre>
+ 
+<hr />
+ 
+<ul>
+<li>the <code>link</code> tag appears in the <code>head</code> of an HTML page</li>
+<li>can link to multiple style sheet files
+	<ul>
+	<li>in case of a conflict (two sheets define a style for the same HTML element), the latter sheet's properties will be used</li>
+	</ul>
+</li>
+</ul>
+ 
+</div>
+ 
+ 
+ 
+<div class="slide">
+<hr />
+<h1>CSS properties for colors</h1>
+<hr /> 
+<pre class="example css">
+p {
+    <span class="emphasizedcode">color: red;</span>
+    <span class="emphasizedcode">background-color: yellow;</span>
+}
+</pre>
+ 
+<p style="color: red; background-color: yellow;">This paragraph uses the style above.</p>
+ 
+<hr />
+ 
+<!-- *** XHTML forces you to set them both or neither, doesn't it? -->
+ 
+<ul>
+<li><code><a href="http://www.w3schools.com/cssref/css_colors.asp">color</a></code>: color of the element's text</li>
+<li><code><a href="http://www.w3schools.com/css/css_background.asp">background-color</a></code>: color that will appear behind the element</li>
+</ul>
+ 
+</div>
+ 
+ 
+ 
+<div class="slide">
+<hr />
+<h1>Specifying colors</h1>
+<hr /> 
+<pre class="example css">
+p { color: <span class="emphasizedcode">red</span>; }
+h2 { color: <span class="emphasizedcode">rgb(128, 0, 196)</span>; }
+h4 { color: <span class="emphasizedcode">#FF8800</span>; }
+</pre>
+ 
+<p><span style="color: red;">This paragraph uses the first style above.</span><br />
+<span style="color: rgb(128, 0, 196); font-weight: bold; font-size: 1.10em;">This heading uses the second style above.</span><br />
+<span style="color: #FF8800; font-weight: bold; font-size: 1.05em;">This heading uses the third style above.</span></p>
+ 
+<hr />
+ 
+<ul>
+<li><a href="http://www.w3schools.com/cssref/css_colors.asp">color names</a>: <code style="color: aqua">aqua</code>, <code style="color: black">black</code>, <code style="color: blue">blue</code>, <code style="color: fuchsia">fuchsia</code>, <code style="color: gray">gray</code>, <code style="color: green">green</code>, <code style="color: lime">lime</code>, <code style="color: maroon">maroon</code>, <code style="color: navy">navy</code>, <code style="color: olive">olive</code>, <code style="color: purple">purple</code>, <code style="color: red">red</code>, <code style="color: silver">silver</code>, <code style="color: teal">teal</code>, <code style="color: white">white</code> (<a href="http://www.clickz.com/showPage.html?page=3116421">white</a>), <code style="color: yellow">yellow</code></li>
+<li>RGB codes: red, green, and blue values from 0 (none) to 255 (full)</li>
+<li>hex codes: RGB values in base-16 from 00 (0, none) to FF (255, full)</li>
+</ul>
+ 
+</div>
+ 
+ 
+ 
+<div class="slide">
+<hr />
+<h1>CSS properties for <a href="http://www.w3schools.com/css/css_font.asp">fonts</a></h1>
+<hr /> 
+<ul>
+<li><code><a href="http://www.w3schools.com/css/css_font.asp">font-family</a></code>: which font will be used</li>
+<li><code><a href="http://www.w3schools.com/css/css_font.asp">font-size</a></code>: how large the letters will be drawn</li>
+<li><code><a href="http://www.w3schools.com/css/css_font.asp">font-style</a></code>: used to enable/disable italic style</li>
+<li><code><a href="http://www.w3schools.com/css/css_font.asp">font-weight</a></code>: used to enable/disable bold style</li>
+<li><a href="http://www.w3schools.com/css/css_font.asp">Complete list of font properties</a></li>
+</ul>
+ 
+</div>
+ 
+ 
+ 
+<div class="slide">
+<hr />
+<h1><code><a href="http://www.w3schools.com/css/css_font.asp">font-family</a></code></h1>
+<hr /> 
+<pre class="example css">
+p { <span class="emphasizedcode">font-family: "Georgia";</span> }
+h2 { <span class="emphasizedcode">font-family: "Arial Narrow";</span> }
+</pre>
+ 
+<p style="font-family: 'Georgia';">This paragraph uses the first style above.</p>
+<h2 style="font-family: 'Arial Narrow';">This heading uses the second style above.</h2>
+ 
+<hr />
+ 
+<ul>
+<li>enclose multi-word font names in quotes</li>
+</ul>
+ 
+</div>
+ 
+ 
+ 
+<div class="slide">
+<hr />
+<h1>More about <code>font-family</code></h1>
+<hr /> 
+<pre class="example css">
+p { font-family: <span class="emphasizedcode">"Garamond", "Times New Roman", serif</span>; }
+</pre>
+ 
+<p style="font-family: 'Garamond', 'Times New Roman', sans-serif;">This paragraph uses the above style.</p>
+ 
+<hr />
+ 
+<ul>
+<li>can specify multiple fonts from highest to lowest priority</li>
+<li><span class="term">generic font names</span>: <br />
+<span style="font-family: serif">serif</span>, <span style="font-family: sans-serif">sans-serif</span>, <span style="font-family: cursive">cursive</span>, <span style="font-family: fantasy">fantasy</span>, <span style="font-family: monospace">monospace</span></li>
+</ul>
+ 
+<div class="handout">
+<ul>
+<li>if the first font is not found on the user's computer, the next is tried</li>
+<li>generally should specify similar fonts</li>
+<li>placing a generic font name at the end of your <code>font-family</code> value ensures that every computer will use a valid font</li>
+</ul>
+</div>
+</div>
+ 
+ 
+ 
+<div class="slide">
+<hr />
+<h1><code><a href="http://www.w3schools.com/css/css_font.asp">font-size</a></code></h1>
+<hr /> 
+<pre class="example css">
+p { <span class="emphasizedcode">font-size: 14pt;</span> }
+</pre>
+ 
+<p style="font-size: 14pt;">This paragraph uses the style above.</p>
+ 
+</div>
+ 
+ 
+ 
+<div class="slide">
+<hr />
+<h1>More about <code>font-size</code></h1>
+<hr /> 
+<pre class="example css">
+p { font-size: <span class="emphasizedcode">x-large</span>; }
+</pre>
+ 
+<p style="font-size: x-large;">This paragraph uses the above style.</p>
+ 
+<hr />
+ 
+<ul>
+<li>vague font sizes: <code style="font-size: xx-small;">xx-small</code>, <code style="font-size: x-small;">x-small</code>, <code style="font-size: small;">small</code>, <code style="font-size: medium;">medium</code>, <code style="font-size: large;">large</code>, <code style="font-size: x-large;">x-large</code>, <code style="font-size: xx-large;">xx-large</code></li>
+<li>relative font sizes: <code style="font-size: smaller;">smaller</code>, <code style="font-size: larger;">larger</code></li>
+<li>percentage font sizes, e.g.: <code style="font-size: 90%;">90%</code>, <code style="font-size: 120%;">120%</code></li>
+<li><a href="http://www.w3schools.com/cssref/css_units.asp">units: pixels (<code>px</code>) vs. point (<code>pt</code>) vs. m-size (<code>em</code>)</a><br />
+<code style="font-size: 16px;">16px</code>, <code style="font-size: 16pt;">16pt</code>, <code style="font-size: 1.16em;">1.16em</code></li>
+</ul>
+ 
+<div class="handout">
+<ul>
+<li><code>px</code> specifies a number of pixels on the screen (absolute)</li>
+<li><code>pt</code> specifies number of <em>point</em>, where a point is 1/72 of an inch onscreen</li>
+<li><code>em</code> specifies number of <em>m-widths</em>, where 1 em is equal to the font's current size</li>
+</ul>
+</div>
+ 
+</div>
+ 
+ 
+ 
+<div class="slide">
+<hr />
+<h1><code><a href="http://www.w3schools.com/css/css_font.asp">font-weight</a></code>, <code><a href="http://www.w3schools.com/css/css_font.asp">font-style</a></code></h1>
+<hr /> 
+<pre class="example css">
+p {
+    <span class="emphasizedcode">font-weight: bold;</span>
+    <span class="emphasizedcode">font-style: italic;</span>
+}
+</pre>
+ 
+<p style="font-weight: bold; font-style: italic;">This paragraph uses the style above.</p>
+ 
+<hr />
+ 
+<ul>
+<li>either of the above can be set to <code>normal</code> to turn them off (e.g. headings)</li>
+</ul>
+ 
+</div>
+ 
+ 
+ 
+<div class="slide">
+<hr />
+<h1>Body styles</h1>
+<hr /> 
+<pre class="example css">
+body { font-size: 16px; }
+</pre>
+ 
+<ul>
+<li>to apply a style to the entire body of your page, write a selector for the <code>body</code> element</li>
+<li>saves you from manually applying a style to each element</li>
+</ul>
+ 
+</div>
+ 
+ 
+ 
+<div class="slide">
+<hr />
+<h1>Practice problem: Kittens</h1>
+<hr />
+<table class="questiontable">
+<!--
+<tr><th> </th><th>Interaction Pane:</th></tr>
+-->
+<tr style="vertical-align: top"><td>
+<div id="answer_q1" style="font-size: smaller;">
+<h2><img src="images/kitten1.jpg" alt="kitten 1" title="kitten 1" />
+KITTENS!
+<img src="images/kitten2.jpg" alt="kitten 2" title="kitten 2" />
+</h2>
+ 
+<h2>Why I love them:</h2>
+ 
+<ol>
+<li>They are <em>little</em>.</li>
+<li>They make <strong>adorable</strong> sounds:
+	<ul>
+	<li><q>Meow!</q></li>
+	<li><q>Purr!</q></li>
+	</ul>
+</li>
+<li>JUST <a href="http://kittenwar.com/">LOOK AT THEM</a>!</li>
+</ol>
+</div>
+<div id="results_q1" style="font-size: 0.5em;"></div>
+</td>
+ 
+<td class="questioncell" style="font-size: smaller;">
+<p>Edit this HTML and add the following styles to it:</p>
+ 
+<ul>
+<li>entire page should have a pink background and use 16 point font</li>
+<li>main heading should use <a href="http://www.bancomicsans.com/">Comic Sans MS</a> font</li>
+<li>lists should appear in a Lucida Console font</li>
+<li>list items should have green background</li>
+<li>link text should be purple</li>
+<li>quote text should be italicized</li>
+</ul>
+ 
+<!--
+<textarea id="inputarea_q1" style="width:100%; word-wrap: break-word;" rows="16" cols="40">
+</textarea>
+-->
+</td>
+</tr>
+ 
+
+</table>
+<h1>Output </h1>
+<img src="images/kitten_style1.png" alt="kitten 2" title="kitten 2" />
+</div>
+ 
+ 
+ 
+<div class="slide">
+<hr />
+<h1>Why <code>&lt;strong&gt;</code>, <code>&lt;em&gt;</code> and not <code>&lt;b&gt;</code>, <code>&lt;i&gt;</code>?</h1>
+<hr /> 
+<pre class="example css">
+strong { font-weight: normal; color: red; }
+em { font-style: normal; background-color: #DDDDDD; }
+</pre>
+ 
+<p>Now if I want to <strong style="font-weight: normal; color: red;">strongly emphasize</strong> something or just <em style="font-style: normal; background-color: #DDDDDD;">emphasize</em> it, it doesn't necessarily have to be bold or italic.</p>
+ 
+<hr />
+ 
+<ul>
+<li><code>strong</code> and <code>em</code> describe attributes of the content (it is something important in the document that you want to emphasize)</li>
+<li><code>b</code> and <code>i</code> describe formatting and presentation (&quot;I want this to be bold.&quot;)</li>
+</ul>
+ 
+</div>
+ 
+ 
+ 
+<div class="slide">
+<hr />
+<h1>CSS properties for text</h1>
+<hr />
+<ul>
+<li><code><a href="http://www.w3schools.com/css/css_text.asp">text-align</a></code>: alignment of text within its element</li>
+<li><code><a http://www.w3schools.com/css/css_text.asp">text-decoration</a></code>: decorations such as underlining</li>
+<li><code><a href="http://www.w3schools.com/css/css_text.asp">line-height</a></code>,
+<code><a href="http://www.w3schools.com/css/css_text.asp">word-spacing</a></code>, <code><a href="http://www.w3schools.com/css/css_text.asp">letter-spacing</a></code>: gaps between the various portions of the text</li>
+<li><code><a href="http://www.w3schools.com/css/css_text.asp">text-indent</a></code>: indents the first letter of each paragraph</li>
+ 
+<li><a href="http://www.w3schools.com/css/css_text.asp">Complete list of text properties</a></li>
+ 
+</ul>
+ 
+</div>
+ 
+ 
+ 
+<div class="slide">
+<hr />
+<h1><code><a href="http://www.w3schools.com/css/css_text.asp">text-align</a></code></h1>
+ <hr />
+<pre class="example css">
+blockquote { <span class="emphasizedcode">text-align: justify;</span> }
+h2 { <span class="emphasizedcode">text-align: center;</span> }
+</pre>
+ 
+<h2 style="text-align: center;">The Emperor's Quote</h2>
+ 
+<blockquote style="text-align: justify;"><p>[TO LUKE SKYWALKER] The alliance... will die. As will your friends. Good, I can feel your anger. I am unarmed. Take your weapon. Strike me down with all of your hatred and your journey towards the dark side will be complete. </p></blockquote>
+ 
+<hr />
+ 
+<ul>
+<li><code>text-align</code> can be <code>left</code>, <code>right</code>, <code>center</code>, or <code>justify</code> (which widens all full lines of the element so that they occupy its entire width) </li>
+</ul>
+ 
+</div>
+ 
+ 
+ 
+<div class="slide">
+<hr />
+<h1><code><a href="http://www.w3schools.com/css/css_text.asp">text-decoration</a></code></h1>
+<hr /> 
+<pre class="example css">
+p { <span class="emphasizedcode">text-decoration: underline;</span> }
+</pre>
+ 
+<p style="text-decoration: underline;">This paragraph uses the style above.</p>
+ 
+<hr />
+ 
+<ul>
+<li>can also be <code style="text-decoration: overline;">overline</code>, <code style="text-decoration: line-through;">line-through</code>, <code style="text-decoration: blink;">blink</code></li>
+<li>effects can be combined:
+<p><code style="text-decoration: overline underline;">text-decoration: overline underline;</code></p></li>
+</ul>
+ 
+</div>
+ 
+ 
+ 
+<div class="slide">
+<hr />
+<h1>CSS <a href="http://www.w3schools.com/cssref/default.asp#dimension">properties for dimensions</a></h1>
+<hr /> 
+<pre class="example css">
+p { <span class="emphasizedcode">width: 400px;</span> background-color: yellow; }
+h2 { <span class="emphasizedcode">width: 50%;</span> background-color: aqua; }
+</pre>
+ 
+<p style="width: 400px; background-color: yellow;">This paragraph uses the first style above.</p>
+<h2 style="width: 50%; background-color: aqua;">This heading uses the second style above.</h2>
+ 
+<hr />
+ 
+<ul>
+<li><code><a href="http://www.w3schools.com/cssref/pr_dim_width.asp">width</a></code>, <code><a href="http://www.w3schools.com/cssref/pr_dim_height.asp">height</a></code>: how wide or tall to make this element</li>
+<li><code><a href="http://www.w3schools.com/cssref/pr_dim_max-width.asp">max-width</a></code>,
+<code><a href="http://www.w3schools.com/cssref/pr_dim_max-height.asp">max-height</a></code>,
+<code><a href="http://www.w3schools.com/cssref/pr_dim_min-width.asp">min-width</a></code>,
+<code><a href="http://www.w3schools.com/cssref/pr_dim_min-height.asp">min-height</a></code>: the maximum or minimum size of this element in the given dimension</li>
+<li>all of these apply only to block elements; ignored for inline elements</li>
+</ul>
+ 
+</div>
+ 
+ 
+ 
+<div class="slide">
+<hr />
+<h1>CSS comments: <code>/*</code> ... <code>*/</code></h1>
+<hr /> 
+<pre class="example css">
+<span class="comment">/* This is a comment.
+   It can span many lines in the CSS file. */</span>
+p { color: red; background-color: aqua; }
+</pre>
+ 
+<ul>
+<li>CSS (like HTML) is usually not commented as rigorously as programming languages such as Java</li>
+<li>the <code>//</code> single-line comment style is NOT supported in CSS</li>
+</ul>
+ 
+</div>
+ 
+ 
+ 
+<div class="slide">
+<hr />
+<h1>Grouping styles</h1>
+<hr /> 
+<pre class="example css">
+p,h1,h2 { color: blue; }
+h2 { background-color: yellow; }
+</pre>
+ 
+<p style="color: blue;">This paragraph uses the above style.</p>
+<h2 style="font-size: larger; color: blue; background-color: yellow;">This heading uses the above style.</h2>
+ 
+<hr />
+ 
+<ul>
+<li>a style can select multiple elements separated by commas</li>
+<li>the given properties will be applied to all of the elements</li>
+<li>the individual elements can also have their own styles (like <code>h2</code> above)</li>
+</ul>
+ 
+</div>
+ 
+ 
+ 
+<div class="slide">
+<hr />
+<h1>Document tree</h1>
+<hr /> 
+<pre class="example html">
+&lt;html&gt;&lt;head&gt;&lt;title&gt;My home page&lt;/title&gt;&lt;/head&gt;
+&lt;body&gt;&lt;h1&gt;My home page&lt;/h1&gt;
+&lt;p&gt;Let me tell you about my favorite composers:&lt;/p&gt;
+&lt;ul&gt;&lt;li&gt;Elvis Costello&lt;/li&gt;
+&lt;li&gt;Johannes Brahms&lt;/li&gt;
+&lt;li&gt;Georges Brassens&lt;/li&gt;
+&lt;/ul&gt;&lt;/body&gt;&lt;/html&gt;
+</pre>
+ 
+<p style="text-align: center;"><img src="images/document_tree.gif" alt="Document tree" style="width: 50%;" /></p>
+</div>
+ 
+ 
+ 
+<div class="slide">
+<hr />
+<h1>Inheriting styles </h1>
+<hr /> 
+<pre class="example css">
+body { font-family: sans-serif; background-color: yellow; }
+p { color: red; background-color: aqua; }
+a { text-decoration: overline underline; }
+h2 { font-weight: bold; text-align: center; }
+</pre>
+ 
+<div style="font-family: sans-serif; background-color: yellow;">
+<h2 style="font-weight: bold; text-align: center;">This is a heading.</h2>
+<p style="color: red; background-color: aqua">A styled paragraph.  <a style="text-decoration: overline underline;" href="2-html.html">Previous slides</a> are available on the web site.</p>
+<ul><li>a bullet list</li></ul>
+</div>
+ 
+<hr />
+ 
+<ul>
+<li>when multiple styles apply to an element, they are <span class="term">inherited</span></li>
+<li>a more tightly matching rule can override a more general inherited rule</li>
+<li>not all properties are inherited (notice link's color above)</li>
+</ul>
+ 
+</div>
+ 
+ 
+ 
+<div class="slide">
+<hr />
+<h1>Styles that conflict</h1>
+<hr /> 
+<pre class="example css">
+p,h1,h2 { color: blue; font-style: italic; }
+h2 { <span class="emphasizedcode">color: red;</span> background-color: yellow; }
+</pre>
+ 
+<p style="color: blue; font-style: italic;">This paragraph uses the first style above.</p>
+ 
+<h2 style="font-size: larger; font-style: italic; color: red; background-color: yellow;">This heading uses both styles above.</h2>
+ 
+<hr />
+ 
+<ul>
+<li>when two styles set conflicting values for the same property, the latter style takes precedence</li>
+</ul>
+ 
+</div>
+ 
+ 
+ 
+<div class="slide">
+<hr />
+<h1>W3C CSS Validator</h1>
+<hr /> 
+<pre class="example css">
+&lt;p&gt;&lt;a href=&quot;http://jigsaw.w3.org/css-validator/check/referer&quot;&gt;
+&lt;img src=&quot;http://jigsaw.w3.org/css-validator/images/vcss&quot;
+alt=&quot;Valid CSS!&quot; /&gt;&lt;/a&gt;&lt;/p&gt;
+</pre>
+ 
+<ul>
+<li><a href="http://jigsaw.w3.org/css-validator/">jigsaw.w3.org/css-validator/</a></li>
+<li>checks your CSS to make sure it meets the official CSS specifications</li>
+<li>more picky than the web browser, which may render malformed CSS correctly</li>
+</ul>
+ 
+</div>
+ 
+ 
+ 
+<div class="slide">
+<hr />
+<h1>Practice problem: More kittens</h1>
+<hr />
+<table class="questiontable">
+<!--
+<tr><th> </th><th>Interaction Pane:</th></tr>
+-->
+<tr style="vertical-align: top"><td>
+<div id="answer_q2" style="font-size: smaller;">
+<h2><img src="images/kitten1.jpg" alt="kitten 1" title="kitten 1" />
+KITTENS!
+<img src="images/kitten2.jpg" alt="kitten 2" title="kitten 2" />
+</h2>
+ 
+<h2>Why I love them:</h2>
+ 
+<ol>
+<li>They are <em>little</em>.</li>
+<li>They make <strong>adorable</strong> sounds:
+	<ul>
+	<li><q>Meow!</q></li>
+	<li><q>Purr!</q></li>
+	</ul>
+</li>
+<li>JUST <a href="http://kittenwar.com/">LOOK AT THEM</a>!</li>
+</ol>
+</div>
+<div id="results_q2" style="font-size: 0.5em;"></div>
+</td>
+ 
+<td class="questioncell" style="font-size: smaller;">
+<p>Edit the previously-styled Kitten HTML and add the following styles:</p>
+ 
+<ul>
+<li>all headings should be centered, and underlined</li>
+<li>the images should be enlarged to occupy one-third of the screen each</li>
+<li>the list of items should be narrowed to occupy only half the page width</li>
+<li>the list background should be green</li>
+<li>emphasized and strongly emphasized text should appear slightly larger than the other text on the page</li>
+</ul>
+ 
+<!--
+<textarea id="inputarea_q1" style="width:100%; word-wrap: break-word;" rows="16" cols="40">
+</textarea>
+-->
+</td>
+</tr>
+ 
+
+</table>
+<h1>Output </h1>
+<img src="images/kitten_style2.png" alt="kitten 2" title="kitten 2" />
+</div>
+ 
+ 
+ 
+<!-- lecture boundary -->
+<div class="slide lecturetitle">
+<hr />
+<h1>----- CSS Classes -----</h1>
+ <hr />
+ 
+</div>
+ 
+ 
+ 
+<div class="slide">
+
+<h1>CSS class selectors</h1>
+<hr /> 
+<pre class="example css">
+p<span class="emphasizedcode">.special</span> {
+    background-color: yellow;
+    font-weight: bold;
+}
+</pre>
+ 
+<hr />
+ 
+<ul>
+<li>selectively applies a CSS rule to only the paragraphs that are part of the class named <code>special</code></li>
+<li>gives a style to some occurrences of an element but not others<br />(<q>I don't want ALL paragraphs to be yellow, just these three...</q>)</li>
+</ul>
+</div>
+ 
+ 
+ 
+<div class="slide">
+<hr />
+<h1>The HTML <code>class</code> attribute</h1>
+ <hr />
+<pre class="example html">
+&lt;p&gt;iPhone!  iPhone!&lt;/p&gt;
+&lt;p <span class="emphasizedcode">class=&quot;special&quot;</span>&gt;See our spectacular iPhone specials!&lt;/p&gt;
+&lt;p <span class="emphasizedcode">class=&quot;special&quot;</span>&gt;Offer valid only for Today!!.&lt;/p&gt;
+&lt;p&gt;We'll beat any advertised price!&lt;/p&gt;
+</pre>
+ 
+<p>iPhone!  iPhone!</p>
+<p style="background-color: yellow; font-weight: bold;">See our spectacular iPhone specials!</p>
+<p style="background-color: yellow; font-weight: bold;">Offer valid only for Today!!</p>
+<p>We'll beat any advertised price!</p>
+ 
+</div>
+ 
+ 
+ 
+<div class="slide">
+<hr />
+<h1>Class selectors without element</h1>
+<hr /> 
+<pre class="example css">
+<span class="emphasizedcode">.standout</span> {
+    color: red;
+    font-family: cursive;
+}
+</pre>
+ 
+<hr />
+ 
+<ul>
+<li>selectively applies a CSS rule to <em>any element</em> that is part of the class named <code>standout</code></li>
+</ul>
+</div>
+ 
+
+<div class="slide">
+<h1>CSS ID selectors</h1>
+ 
+<pre class="example css">
+p<span class="emphasizedcode">#missionstatement</span> {
+    font-style: italic;
+    font-family: "Garamond", "Century Gothic", serif;
+}
+</pre>
+ 
+<hr />
+ 
+<ul>
+<li>selectively applies a CSS rule to only the paragraphs that has the particular ID named <code>missionstatement</code> (next slide)</li>
+<li>differs from class selector in that an ID can only be used once in the HTML document (won't validate otherwise)</li>
+<li>element (<code>p</code> above) can be omitted if desired; rule will apply to any element with ID <code>missionstatement</code></li>
+</ul>
+</div>
+ 
+ 
+ 
+<div class="slide">
+<h1>The HTML <code>id</code> attribute</h1>
+ 
+<pre class="example html">
+&lt;p&gt;Spatula City!  Spatula City!&lt;/p&gt;
+&lt;p <span class="emphasizedcode">id=&quot;missionstatement&quot;</span>&gt;Our mission is to provide the most
+spectacular spatulas and splurge on our specials until our
+customers &lt;q&gt;esplode&lt;/q&gt; with splendor!&lt;/p&gt;
+</pre>
+ 
+<p>Spatula City!  Spatula City!</p>
+<p style="font-style: italic; font-family: 'Garamond', 'Century Gothic', serif;">
+Our mission is to provide the most spectacular spatulas
+and splurge on our specials until our customers <q>esplode</q> with splendor!</p>
+ 
+</div>
+ 
+ 
+ 
+ 
+
+ 
+<div class="slide">
+<hr />
+<h1>HTML <code>class</code> attribute revisited</h1>
+<hr /> 
+<pre class="example html">
+&lt;h2 <span class="emphasizedcode">class=&quot;standout&quot;</span>&gt;iPhone!  iPhone!&lt;/h2&gt;
+&lt;p class=&quot;special&quot;&gt;See our spectacular iPhone specials!&lt;/p&gt;
+&lt;p <span class="emphasizedcode">class=&quot;special standout&quot;</span>&gtOffer valid only for Today!!.&lt;/p&gt;
+&lt;p <span class="emphasizedcode">class=&quot;standout&quot;</span>&gt;We'll beat any advertised price!&lt;/p&gt;
+</pre>
+ 
+<h2 style="color: red; font-family: cursive; font-size: larger;">iPhone!  iPhone!</h2>
+<p style="background-color: yellow; font-weight: bold;">See our spectacular iPhone specials!</p>
+<p style="background-color: yellow; font-weight: bold; color: red; font-family: cursive;">Offer valid only for Today!!.</p>
+<p style="color: red; font-family: cursive;">We'll beat any advertised price!</p>
+ 
+<hr />
+<ul>
+<li>an element can be a member of multiple classes (separated by spaces)</li>
+</ul>
+ 
+</div>
+ 
+ 
+ 
+
+<div class="slide">
+<hr />
+<h1>Logical divisions in HTML: <a href="http://www.w3schools.com/tags/tag_div.asp"><code>&lt;div&gt;</code></a></h1>
+ <hr />
+<p class="description">a section or division of your HTML page (block-level)</p>
+ 
+<pre class="example html">
+<span class="emphasizedcode">&lt;div class=&quot;standout&quot;&gt;</span>
+&lt;h2&gt;Spatula City!  Spatula City!&lt;/h2&gt;
+&lt;p class=&quot;special&quot;&gt;See our spectacular spatula specials!&lt;/p&gt;
+&lt;p&gt;We'll beat any advertised price!&lt;/p&gt;
+<span class="emphasizedcode">&lt;/div&gt;</span>
+</pre>
+ 
+<div style="color: red; font-family: cursive; font-size: smaller; line-height: 1.1em;">
+<h2 style="font-size: larger;">Spatula City!  Spatula City!</h2>
+<p style="background-color: yellow; font-weight: bold;">See our spectacular spatula specials!</p>
+<p>We'll beat any advertised price!</p>
+</div>
+ 
+<hr />
+<ul>
+<li>has no onscreen appearance, but you can apply a style or ID to it, which will be inherited by all elements inside the <code>div</code></li>
+</ul>
+ 
+</div>
+ 
+ 
+ 
+<!-- several divs with IDs -->
+ 
+ 
+ 
+<div class="slide">
+<hr />
+<h1>Inline styling sections: <a href="http://www.w3schools.com/tags/tag_span.asp"><code>&lt;span&gt;</code></a></h1>
+<hr /> 
+<p class="description">an inline element used purely as a range for applying styles</p>
+ 
+<pre class="example html">
+&lt;h2&gt;Spatula City!  Spatula City!&lt;/h2&gt;
+&lt;p&gt;See our <span class="emphasizedcode">&lt;span class=&quot;special&quot;&gt;</span>spectacular<span class="emphasizedcode">&lt;/span&gt;</span>
+spatula specials!&lt;/p&gt;
+&lt;p&gt;We'll beat <span class="emphasizedcode">&lt;span class=&quot;standout&quot;&gt;</span>any advertised
+price<span class="emphasizedcode">&lt;/span&gt;</span>!&lt;/p&gt;
+</pre>
+ 
+<div style="font-size: smaller; line-height: 1.1em;">
+<h2 style="font-size: larger;">Spatula City!  Spatula City!</h2>
+<p>See our <span style="background-color: yellow; font-weight: bold;">spectacular</span> spatula specials!</p>
+<p>We'll beat <span style="color: red; font-family: cursive;">any advertised price</span>!</p>
+</div>
+ 
+<hr />
+<ul>
+<li>has no onscreen appearance, but you can apply a style or ID to it, which will be applied to the text inside the <code>span</code></li>
+</ul>
+ 
+</div>
+ 
+ 
+ 
+<!-- Java code example! -->
+ 
+ 
+ 
+<!-- "cascading" aspect of CSS -->
+ 
+<div class="slide">
+<hr />
+<h1>Embedding style sheets: <code><a href="http://www.w3schools.com/tags/tag_style.asp">&lt;style&gt;</a></code></h1>
+<hr /> 
+<pre class="example html">
+&lt;head&gt;
+<span class="emphasizedcode">&lt;style type=&quot;text/css&quot;&gt;
+p { font-family: sans-serif; color: red; }
+h2 { background-color: yellow; }
+&lt;/style&gt;</span>
+&lt;/head&gt;
+</pre>
+ 
+<hr />
+ 
+<ul>
+<li>should be placed within the <code>head</code> of the HTML page</li>
+<li>linking to an external style sheet file is preferred, especially when you have many styles</li>
+</ul>
+ 
+</div>
+ 
+ 
+ 
+<div class="slide">
+<hr />
+<h1>Inline styles: the <code>style</code> attribute</h1>
+<hr /> 
+<pre class="example html">
+&lt;p <span class="emphasizedcode">style=&quot;font-family: sans-serif; color: red;&quot;</span>&gt;
+This is a paragraph&lt;/p&gt;
+</pre>
+ 
+<p style="font-family: sans-serif; color: red;">This is a paragraph</p>
+ 
+<hr />
+ 
+<ul>
+<li>higher precedence than embedded or linked styles</li>
+<li>useful for one-time overrides</li>
+</ul>
+ 
+</div>
+ 
+ 
+ 
+<div class="slide">
+<hr />
+<h1><em>Cascading</em> style sheets</h1>
+<hr /> 
+<ul>
+<li>it's called Cascading Style Sheets because the attributes of an element <em><a href="http://m-w.com/dictionary/cascade">cascade</a></em> together in this order:
+	<ul>
+	<li>browser's default styles</li>
+	<li>external style sheet files (in a <code>&lt;link&gt;</code> tag)</li>
+	<li>internal style sheets (inside a <code>&lt;style&gt;</code> tag in the page's header)</li>
+	<li>inline style (the <code>style</code> attribute of the HTML element)</li>
+	</ul>
+</li>
+</ul>
+</div>
+ 
+ 
+
+ 
+ 
+ 
+<!-- lecture boundary -->
+<div class="slide lecturetitle">
+<hr />
+<h1>----- Background properties -----</h1>
+<hr /> 
+<h2>CSS properties for backgrounds</h2>
+ 
+</div>
+ 
+ 
+ 
+<div class="slide">
+<h1>CSS <a href="http://www.w3schools.com/css/css_background.asp">properties for backgrounds</a></h1>
+ 
+<ul>
+<li><code><a href="http://www.w3schools.com/css/css_background.asp">background-color</a></code> : color to fill background</li>
+<li><code><a href="http://www.w3schools.com/css/css_background.asp">background-image</a></code> : image to place in background</li>
+<li><code><a href="http://www.w3schools.com/css/css_background.asp">background-position</a></code> : placement of bg image within element</li>
+<li><code><a href="http://www.w3schools.com/css/css_background.asp">background-repeat</a></code> : whether/how bg image should be repeated</li>
+<li><code><a href="http://www.w3schools.com/css/css_background.asp">background-attachment</a></code> : whether bg image scrolls with page</li>
+<li><code><a href="http://www.w3schools.com/css/css_background.asp">background</a></code> : shorthand to set all background properties</li>
+</ul>
+ 
+</div>
+ 
+ 
+ 
+<div class="slide">
+<hr />
+<h1><code><a href="http://www.w3schools.com/css/css_background.asp">background-image</a></code></h1>
+ <hr />
+<pre class="example css">
+body {
+    <span class="emphasizedcode">background-image: url(&quot;draft.jpg&quot;);</span>
+}
+</pre>
+ 
+<div style="background-image: url('images/draft.jpg');">
+<p>This is the first paragraph</p>
+<p>This is the second paragraph...<br />
+It occupies 2 lines</p>
+</div>
+ 
+<hr />
+ 
+<ul>
+<li>background image/color fills the content area and the padding</li>
+</ul>
+ 
+</div>
+ 
+ 
+ 
+<div class="slide">
+<hr />
+<h1><code><a href="http://www.w3schools.com/css/css_background.asp">background-repeat</a></code></h1>
+ <hr />
+<pre class="example css">
+body {
+    background-image: url(&quot;draft.jpg&quot;);
+    <span class="emphasizedcode">background-repeat: repeat-x;</span>
+}
+</pre>
+ 
+<div style="background-image: url('images/draft.jpg'); background-repeat: repeat-x;">
+<p>This is the first paragraph</p>
+<p>This is the second paragraph...<br />
+It occupies 2 lines</p>
+</div>
+ 
+<hr />
+ 
+<ul>
+<li>can be <code>repeat</code> (default), <code>repeat-x</code>, <code>repeat-y</code>, or <code>no-repeat</code></li>
+</ul>
+ 
+</div>
+ 
+ 
+ 
+<div class="slide">
+<hr />
+<h1><code><a href="http://www.w3schools.com/css/css_background.asp">background-position</a></code></h1>
+<hr /> 
+<pre class="example css">
+body {
+    background-image: url(&quot;draft.jpg&quot;);
+    background-repeat: no-repeat;
+    <span class="emphasizedcode">background-position: 370px 20px;</span>
+}
+</pre>
+ 
+<div style="background-image: url('images/draft.jpg'); background-repeat: no-repeat; background-position: 370px 20px;">
+<p>This is the first paragraph</p>
+<p>This is the second paragraph...<br />
+It occupies 2 lines</p>
+</div>
+ 
+<hr />
+ 
+<ul>
+<li>value consists of two tokens, each of which can be <code>top</code>, <code>left</code>, <code>right</code>, <code>bottom</code>, <code>center</code>, a percentage, or a length value in <code>px</code>, <code>pt</code>, etc.</li>
+<li>value can be negative to shift left/up by a given amount</li>
+</ul>
+ 
+</div>
+ 
+<div class="slide">
+<hr />
+<h1><a href="http://www.w3schools.com/css/css_pseudo_classes.asp">Pseudo-classes</a></h1>
+ <hr />
+<pre class="example css">
+a:link {color: #FF0000}      /* unvisited link */
+a:visited {color: #00FF00}   /* visited link */
+a:hover {color: #FF00FF}     /* mouse over link */
+a:active {color: #0000FF}    /* selected link */
+</pre>
+ 
+<ul>
+<li><code>:active</code> : an activated or selected element</li>
+<li><code>:focus</code> : an element that has the keyboard focus</li>
+<li><code>:hover</code> : an element that has the mouse over it</li>
+<li><code>:link</code> : a link that has not been visited</li>
+<li><code>:visited</code> : a link that has already been visited</li>
+<li><code>:first-child</code> : an element that is the first child of another</li>
+<!---
+<li><code>:first-letter</code> : the first letter of text inside an element (hanging "I" example)</li>
+<li><code>:first-line</code> : the first line of text inside an element</li>
+-->
+</ul>
+ 
+</div>
+ 
+ 
+ 
+<div class="slide">
+<hr />
+<h1>Pseudo-class example</h1>
+ <hr />
+ 
+ 
+<pre class="example css">
+a:link {color: red}
+a:visited {color: green}
+a:hover {color: purple; background-color: yellow;}
+a:active {color: blue}
+</pre>
+ 
+<pre class="example html">
+&lt;a href=&quot;http://www.google.com&quot;&gt;Goooooogle&lt;/a&gt;
+</pre>
+ 
+<a id="examplelink" href="http://www.google.com">Goooooogle</a>
+ 
+<hr />
+ 
+<ul>
+<li class="incremental">How would we make unvisited links blue, only they are in a paragraph inside of the <code>div</code> with id <code>header</code> or id <code>footer</code>?</li>
+</ul>
+ 
+<div class="handout">
+<ul>
+<li>answer:
+<pre>
+div#header p a:link, div#footer p a:link {
+    color: blue;
+}
+</pre>
+</li>
+</ul>
+</div>
+ 
+</div>
+ 
+ 
+ 
+<div class="slide">
+<hr />
+<h1>The <a href="http://www.w3schools.com/css/css_list.asp"><code>list-style-type</code></a> property</h1>
+ <hr />
+<pre class="example css">
+ol { <span class="emphasizedcode">list-style-type: lower-roman;</span> }
+</pre>
+ 
+<ul style="list-style-type: square">
+<li>Possible values:
+	<ol style="list-style-type: lower-roman">
+	<li><code>none</code> : No marker</li>
+	<li><code>disc</code> (default), <code>circle</code>, <code>square</code></li>
+	<li><code>decimal</code> : 1, 2, 3, etc.</li>
+	<li><code>decimal-leading-zero</code> : 01, 02, 03, etc.</li>
+	<li><code>lower-roman</code> : i, ii, iii, iv, v, etc.</li>
+	<li><code>upper-roman</code> : I, II, III, IV, V, etc.</li>
+	<li><code>lower-alpha</code> : a, b, c, d, e, etc.</li>
+	<li><code>upper-alpha</code> : A, B, C, D, E, etc.</li>
+	<li><code>lower-greek</code> : alpha, beta, gamma, etc.</li>
+	<li>others: <code>hebrew</code>, <code>armenian</code>, <code>georgian</code>, <code>cjk-ideographic</code>, <code>hiragana</code>, <code>katakana</code>, <code>hiragana-iroha</code>, <code>katakana-iroha</code></li>
+	</ol>
+</li>
+</ul>
+</div>
+ 
+  
+<div class="slide">
+<hr />
+<h1>Practice problem: Digg</h1>
+<hr /> 
+<p style="margin-bottom: 10px;">Add styling to the web page stored as <code><a href="examples/digg.html">digg.html</a></code> to make it look like this:</p>
+<table><tr><td>
+<p><img src="images/digg.png" alt="Digg ripoff" /></p>
+</td><td>
+<ul style="margin-left: 10px; font-size: smaller;">
+<li>11pt Arial font</li>
+<li>article background #EEEEEE</li>
+<li>heading color #105CB6</li>
+<li>made popular time color #A1295A</li>
+<li>diggs background (list background) #FFF3B1</li>
+<li>every odd div background color - pink </li>
+</ul>
+</td></tr></table>
+ 
+</div>
+
+ 
+ 
+</div>
+ 
+</body>
+</html>
+
